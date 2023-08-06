@@ -93,25 +93,6 @@ SOCIALACCOUNT_PROVIDERS = {
 
 
 
-#SOCIALACCOUNT_PROVIDERS = {
- #   'google': {
-  #      'SCOPE': [
-   #         'profile',
-    #        'email',
-     #  ],
-      #  'AUTH_PARAMS': {
-    #        'access_type': 'offline',
-     #   },
-  #    3  'OAUTH_PKCE_ENABLED': True,
-    #}
-#}
-
-
-
-
-
-
-
 WSGI_APPLICATION = 'elevate.wsgi.application'
 
 
