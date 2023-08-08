@@ -18,7 +18,7 @@ def dashboard(request):
     if request.method == 'POST':
         form = SubscribeForm(request.POST)
         if form.is_valid():
-            subject = 'Code Band'
+            subject = 'Welcome Onboard'
             message = 'Thanks for subscribing to our news feed.\nWe will keep you posted and updated the whole time of the way.\nHosted by Johnson Masino(Back End Developer.)'
             recipient = form.cleaned_data.get('email')
             send_mail(subject, 
