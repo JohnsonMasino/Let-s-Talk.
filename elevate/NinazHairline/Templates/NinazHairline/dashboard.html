@@ -1,4 +1,8 @@
+
+<!--dashboard.html-->
+
 <h1>Welcome to Dashboard</h1>
+<link rel="stylesheet" href="styles.css"></link>
 
 <form method="POST" action="https://checkout.flutterwave.com/v3/hosted/pay">
     <div>
@@ -15,9 +19,27 @@
     <button type="submit" id="start-payment-button">Pay with flutterwave here</button>
   </form>
 
+  <main>
+    <h1>Subscribe to our news feed to get emails</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p style="color: red">{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form action="{% url 'dashboard' %}" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Submit">
+    </form>
+</main>
+
+
+
 
 {% if request.user.is_authenticated %}
 
     <a href="{% url 'account_logout' %}">Log out of this account here</a>
 
 {% endif %}
+
+
