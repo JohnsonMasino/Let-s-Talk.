@@ -1,11 +1,33 @@
-
+{% extends 'NinazHairline/main.html' %}
 {% load socialaccount %}
 
+<link rel="stylesheet" href="NinazHairline/styles.css"></link>
+{% block content %}
 <h1>Welcome to our Homepage</h1>
 
+<div>
 
-<a href="{% provider_login_url 'google' %}">Login through google here</a>
+    <div>
+        {% for service in services %}
+            <div>
+                <h4>{{service.id}} -- {{service.name}}</h4>
+            </div>
 
+        {% endfor %}
+    </div>
+
+</div>
+
+
+
+
+<h3>Click
+    <a href="{% provider_login_url 'google' %}">here
+
+    </a> to create an account
+    </h3>
+
+{% endblock content %}
 
 
 

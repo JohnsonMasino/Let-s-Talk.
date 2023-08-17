@@ -9,9 +9,16 @@ from NinazHairline.forms import SubscribeForm
 
 # Create your views here.
 
-def home(request):
+services = [
+    {'id': 1, 'name':'Buy Hairs Here!'},
+    {'id': 2, 'name':'Book MakeUp Services!'},
+    {'id': 3, 'name':'Book Haircut Services!'},
+    {'id': 4, 'name':'Book Braiding Services!'},
+]
 
-    return render(request, 'NinazHairline/index.html')
+def home(request):
+    context = {'services': services}
+    return render(request, 'NinazHairline/index.html', context)
 
 def dashboard(request):
     form = SubscribeForm()
@@ -26,5 +33,6 @@ def dashboard(request):
             messages.success(request, 'Successfully Sent!')
             return redirect('dashboard')
     return render(request, 'NinazHairline/dashboard.html', {'form': form})
+
 
 
