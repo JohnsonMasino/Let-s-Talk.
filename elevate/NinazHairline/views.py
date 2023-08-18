@@ -1,5 +1,6 @@
 
 from django.shortcuts import render
+from django.urls import reverse
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.shortcuts import render, redirect
@@ -18,7 +19,7 @@ services = [
 
 def home(request):
     context = {'services': services}
-    return render(request, 'NinazHairline/index.html', context)
+    return render(request, 'NinazHairline/home.html', context)
 
 def dashboard(request):
     form = SubscribeForm()
