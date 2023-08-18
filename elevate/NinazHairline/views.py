@@ -35,5 +35,12 @@ def dashboard(request):
             return redirect('dashboard')
     return render(request, 'NinazHairline/dashboard.html', {'form': form})
 
+def service(request, pk):
+    service = None
+    for i in services:
+        if i['id'] == int(pk):
+            service = i
+    context = {'service': service}
 
+    return render(request, 'NinazHairline/service.html', context)
 

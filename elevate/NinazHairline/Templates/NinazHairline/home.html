@@ -11,7 +11,7 @@
     <div>
         {% for service in services %}
             <div>
-                <h4>{{service.id}} -- {{service.name}}</h4>
+                <h4>{{service.id}} -- <a href="/service/{{service.id}}">{{service.name}}</a></h4>
             </div>
 
         {% endfor %}
