@@ -4,11 +4,15 @@ from . import views
 
 urlpatterns = [
     
-    path('', views.home, name=""),
+    path('', views.home, name="home"),
     
     path('dashboard/', views.dashboard, name='dashboard'),
 
     path('service/<str:pk>/', views.service, name='service'),
+
+    path('create-service/', views.createService, name='create-service'),
+
+    path('update-service/<str:pk>/', views.updateService, name='update-service'),
 
 ]
 

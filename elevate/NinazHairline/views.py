@@ -1,23 +1,25 @@
 
-from django.shortcuts import render
-from django.urls import reverse
+from django.shortcuts import render, redirect
+#from django.urls import reverse
 from django.contrib import messages
 from django.core.mail import send_mail
-from django.shortcuts import render, redirect
 from django.conf import settings
 from NinazHairline.forms import SubscribeForm
+from .models import Service
+from .forms import ServiceForm
 
 
 # Create your views here.
 
-services = [
-    {'id': 1, 'name':'Buy Hairs Here!'},
-    {'id': 2, 'name':'Book MakeUp Services!'},
-    {'id': 3, 'name':'Book Haircut Services!'},
-    {'id': 4, 'name':'Book Braiding Services!'},
-]
+"""services = [
+    {'id': 1, 'name':'Talk about GRIT!!!'},
+    {'id': 2, 'name':'Git/GitHub'},
+    {'id': 3, 'name':'What happens when you type "google.com" in a browser search bar and click enter ?'},
+    {'id': 4, 'name':'Discussion room'},
+]"""
 
 def home(request):
+    services = Service.objects.all()
     context = {'services': services}
     return render(request, 'NinazHairline/home.html', context)
 
@@ -33,14 +35,35 @@ def dashboard(request):
               message, settings.EMAIL_HOST_USER, [recipient], fail_silently=False)
             messages.success(request, 'Successfully Sent!')
             return redirect('dashboard')
-    return render(request, 'NinazHairline/dashboard.html', {'form': form})
+    context = {'form': form}
+    return render(request, 'NinazHairline/dashboard.html', context)
 
 def service(request, pk):
-    service = None
-    for i in services:
-        if i['id'] == int(pk):
-            service = i
+    service = Service.objects.get(id=pk)
     context = {'service': service}
 
     return render(request, 'NinazHairline/service.html', context)
+
+def createService(request):
+    form = ServiceForm()
+    if request.method == 'POST':
+        form = ServiceForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    context = {'form': form}
+    return render(request, 'NinazHairline/service_form.html', context)
+
+def updateService(request, pk):
+    service = Service.objects.get(id=pk)
+    form = ServiceForm(instance=service)
+
+    if request.method == "POST":
+        form = ServiceForm(request.POST, instance=service)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+
+    context = {'form': form}
+    return render(request, 'NinazHairline/service_form.html', context)
 
