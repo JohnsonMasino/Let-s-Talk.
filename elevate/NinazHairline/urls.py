@@ -14,5 +14,6 @@ urlpatterns = [
 
     path('update-service/<str:pk>/', views.updateService, name='update-service'),
 
+    path('delete-service/<str:pk>/', views.deleteService, name='delete-service'),
 ]
 

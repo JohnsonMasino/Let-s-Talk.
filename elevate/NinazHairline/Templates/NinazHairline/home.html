@@ -1,20 +1,41 @@
 {% extends 'NinazHairline/main.html' %}
 {% load socialaccount %}
 
-<link rel="stylesheet" href="NinazHairline/styles.css"></link>
 {% block content %}
-<h1>Welcome to our Homepage</h1>
-<h4>You can engage in conversations based on your topic of interest.<br>Checkout our services please:</h4>
 
-<div>
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 1fr 3fr;
 
-    <a href="{% url 'create-service' %}">Create Service</a>
+    }
+</style>
+
+<div class="home-container">
+
+    <div>
+        <h3>Browse Topics Here</h3>
+        <hr>
+
+        <div>
+            <a href="{% url 'home' %}">All</a>
+        </div>
+
+        {% for topic in topics %}
+        <div>
+            <a href="{% url 'home'  %}?q={{topic.name}}">{{topic.name}}</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div>
+        <a href="{% url 'create-service' %}">Create A Room</a>
 
     <div>
         {% for service in services %}
             <div>
                 <a href="{% url 'update-service' service.id %}">Edit</a>
-                <a href="">Delete</a>
+                <a href="{% url 'delete-service' service.id %}">Delete</a>
                 <span>@{{service.host.username}}</span>
                 <h3>{{service.id}} -- <a href="{% url 'service' service.id %}">{{service.name}}</a></h3>
                 <small>{{service.topic.name}}</small>
@@ -24,9 +45,9 @@
         {% endfor %}
     </div>
 
+    </div>
+
 </div>
-
-
 
 
 <h4>
@@ -34,9 +55,4 @@
 </h4>
 
 {% endblock content %}
-
-
-
-
-
 

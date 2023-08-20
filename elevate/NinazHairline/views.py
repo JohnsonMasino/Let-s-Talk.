@@ -1,26 +1,31 @@
 
 from django.shortcuts import render, redirect
-#from django.urls import reverse
+from django.urls import reverse
 from django.contrib import messages
 from django.core.mail import send_mail
 from django.conf import settings
 from NinazHairline.forms import SubscribeForm
-from .models import Service
+from .models import Service, Topic
 from .forms import ServiceForm
 
 
 # Create your views here.
 
-"""services = [
-    {'id': 1, 'name':'Talk about GRIT!!!'},
-    {'id': 2, 'name':'Git/GitHub'},
-    {'id': 3, 'name':'What happens when you type "google.com" in a browser search bar and click enter ?'},
-    {'id': 4, 'name':'Discussion room'},
-]"""
+#services = [
+#    {'id': 1, 'name':'Talk about GRIT!!!'},
+#    {'id': 2, 'name':'Git/GitHub'},
+#    {'id': 3, 'name':'What happens when you type "google.com" in a browser search bar and click enter ?'},
+#    {'id': 4, 'name':'Discussion room'},
+#]
 
 def home(request):
-    services = Service.objects.all()
-    context = {'services': services}
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+
+    services = Service.objects.filter(topic__name__icontains=q)
+
+    topics = Topic.objects.all()
+
+    context = {'services': services, 'topics': topics}
     return render(request, 'NinazHairline/home.html', context)
 
 def dashboard(request):
@@ -66,4 +71,13 @@ def updateService(request, pk):
 
     context = {'form': form}
     return render(request, 'NinazHairline/service_form.html', context)
+
+def deleteService(request, pk):
+    service = Service.objects.get(id=pk)
+    if request.method == 'POST':
+        service.delete()
+        return redirect('home')
+
+    return render(request, 'NinazHairline/delete.html', {'obj': service})
+
 
