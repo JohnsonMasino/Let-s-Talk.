@@ -14,57 +14,18 @@
 <div class="home-container">
 
     <div>
-        <h3>Browse Topics Here</h3>
-        <hr>
-
-        <div>
-            <a href="{% url 'home' %}">All</a>
-        </div>
-
-        {% for topic in topics %}
-        <div>
-            <a href="{% url 'home'  %}?q={{topic.name}}">{{topic.name}}</a>
-        </div>
-        {% endfor %}
+        {% include 'NinazHairline/topics_components.html' %}
     </div>
 
     <div>
         <h5>{{service_count}} rooms available</h5>
         <a href="{% url 'create-service' %}">Create A Room</a>
 
-        <div>
-        
-            {% for service in services %}
-            <div>
-                {% if request.user == service.host %}
-                <a href="{% url 'update-service' service.id %}">Edit</a>
-                <a href="{% url 'delete-service' service.id %}">Delete</a>
-                {% endif %}
-                <span>@{{service.host.username}}</span>
-                <h3>{{service.id}} -- <a href="{% url 'service' service.id %}">{{service.name}}</a></h3>
-                <small>{{service.topic.name}}</small>
-                <hr>
-            </div>
-
-            {% endfor %}
-        </div>
+        {% include 'NinazHairline/feed_component.html' %}
     </div>
 
     <div>
-        <h3>Recent Activities</h3>
-        <hr>
-        {% for message in service_messages %}
-            <div>
-                <small>@{{message.user}} {{message.created|timesince}} </small>
-                <small>replied to "{{message.service}}"</small>
-
-                <p>{{message}}</p>
-                {% if request.user == message.user %}
-                <a href="{% url 'delete-message' message.id %}">Delete</a>
-                {% endif %}
-                <hr>
-            </div>
-        {% endfor %}
+        {% include 'NinazHairline/activity_component.html' %}
     </div>
 
 
