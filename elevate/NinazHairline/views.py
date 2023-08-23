@@ -80,8 +80,10 @@ def home(request):
 
     topics = Topic.objects.all()
     service_count = services.count()
+    service_messages = Message.objects.all()
 
-    context = {'services': services, 'topics': topics, 'service_count': service_count}
+    context = {'services': services, 'topics': topics,
+    'service_count': service_count, 'service_messages': service_messages}
     return render(request, 'NinazHairline/home.html', context)
 
 def dashboard(request):

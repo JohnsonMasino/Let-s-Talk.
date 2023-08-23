@@ -6,7 +6,7 @@
 <style>
     .home-container{
         display: grid;
-        grid-template-columns: 1fr 3fr;
+        grid-template-columns: 1fr 3fr 1fr;
 
     }
 </style>
@@ -32,8 +32,9 @@
         <h5>{{service_count}} rooms available</h5>
         <a href="{% url 'create-service' %}">Create A Room</a>
 
-    <div>
-        {% for service in services %}
+        <div>
+        
+            {% for service in services %}
             <div>
                 {% if request.user == service.host %}
                 <a href="{% url 'update-service' service.id %}">Edit</a>
@@ -45,10 +46,23 @@
                 <hr>
             </div>
 
+            {% endfor %}
+        </div>
+    </div>
+
+    <div>
+        <h3>Recent Activities</h3>
+        <hr>
+        {% for message in service_messages %}
+            <div>
+                <small>@{{message.user}} {{message.created|timesince}} </small>
+                <small>replied to "{{message.service}}"</small>
+
+                <p>{{message}}</p>
+            </div>
         {% endfor %}
     </div>
 
-    </div>
 
 </div>
 
