@@ -80,7 +80,7 @@ def home(request):
 
     topics = Topic.objects.all()
     service_count = services.count()
-    service_messages = Message.objects.all()
+    service_messages = Message.objects.filter(Q(service__topic__name__icontains=q))
 
     context = {'services': services, 'topics': topics,
     'service_count': service_count, 'service_messages': service_messages}
