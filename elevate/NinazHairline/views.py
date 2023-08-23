@@ -120,6 +120,11 @@ def service(request, pk):
 
     return render(request, 'NinazHairline/service.html', context)
 
+def userProfile(request, pk):
+    user = User.objects.get(id=pk)
+    context = {'user': user}
+    return render(request, 'NinazHairline/profile.html', context)
+
 @login_required(login_url='login')
 def createService(request):
     form = ServiceForm()
