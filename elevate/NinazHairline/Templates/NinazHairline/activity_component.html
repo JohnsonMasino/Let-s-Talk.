@@ -3,7 +3,8 @@
 <hr>
 {% for message in service_messages %}
 <div>
-    <small>@{{message.user}} {{message.created|timesince}} </small>
+    <small><a href="{% url 'user-profile' message.user.id %}">@{{message.user}}</a>
+        {{message.created|timesince}} </small>
     <small>replied to "{{message.service}}"</small>
 
     <p>{{message}}</p>

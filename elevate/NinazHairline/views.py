@@ -123,7 +123,10 @@ def service(request, pk):
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
     services = user.service_set.all()
-    context = {'user': user, 'services': services}
+    service_messages = user.message_set.all()
+    topics = Topic.objects.all()
+    context = {'user': user, 'services': services,
+               'service_messages': service_messages, 'topics': topics}
     return render(request, 'NinazHairline/profile.html', context)
 
 @login_required(login_url='login')
