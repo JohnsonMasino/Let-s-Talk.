@@ -132,31 +132,40 @@ def userProfile(request, pk):
 @login_required(login_url='login')
 def createService(request):
     form = ServiceForm()
+    topics = Topic.objects.all()
     if request.method == 'POST':
-        form = ServiceForm(request.POST)
-        if form.is_valid():
-            service = form.save(commit=False)
-            service.host = request.user
-            service.save()
-            return redirect('home')
-    context = {'form': form}
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
+
+        Service.objects.create(
+            host=request.user,
+            topic=topic,
+            name=request.POST.get('name'),
+            description=request.POST.get('description')
+        )
+        return redirect('home')
+    
+    context = {'form': form, 'topics': topics}
     return render(request, 'NinazHairline/service_form.html', context)
 
 @login_required(login_url='login')
 def updateService(request, pk):
     service = Service.objects.get(id=pk)
     form = ServiceForm(instance=service)
-
+    topics = Topic.objects.all()
     if request.user != service.host:
         return HttpResponse('Sorry you are not the owner!!')
 
     if request.method == "POST":
-        form = ServiceForm(request.POST, instance=service)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
+        topic_name = request.POST.get('topic')
+        topic, created = Topic.objects.get_or_create(name=topic_name)
+        service.name = request.POST.get('name')
+        service.topic = topic
+        service.description = request.POST.get('description')
+        service.save()
+        return redirect('home')
 
-    context = {'form': form}
+    context = {'form': form, 'topics': topics, 'service': service}
     return render(request, 'NinazHairline/service_form.html', context)
 
 @login_required(login_url='login')
@@ -186,3 +195,5 @@ def deleteMessage(request, pk):
 
     return render(request, 'NinazHairline/delete.html', {'obj': message})
 
+def updateUser(request):
+    return 
