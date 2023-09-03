@@ -12,7 +12,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from NinazHairline.forms import SubscribeForm
 from .models import Service, Topic, Message
-from .forms import ServiceForm
+from .forms import ServiceForm, UserForm
 
 
 # Create your views here.
@@ -78,7 +78,7 @@ def home(request):
         Q(description__icontains=q)
         )
 
-    topics = Topic.objects.all()
+    topics = Topic.objects.all()[0:5]
     service_count = services.count()
     service_messages = Message.objects.filter(Q(service__topic__name__icontains=q))
 
@@ -195,5 +195,22 @@ def deleteMessage(request, pk):
 
     return render(request, 'NinazHairline/delete.html', {'obj': message})
 
+@login_required(login_url='login')
 def updateUser(request):
-    return render(request, context)
+    user = request.user
+    form = UserForm(instance=user)
+
+    if request.method == 'POST':
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('user-profile', pk=user.id)
+        
+    return render(request, 'NinazHairline/update-user.html', {'form': form})
+
+def topicsPage(request):
+    q = request.GET.get('q') if request.GET.get('q') != None else ''
+    topics = Topic.objects.filter(name__icontains=q)
+    return render(request, 'NinazHairline/topics.html', {'topics': topics})
+
+
