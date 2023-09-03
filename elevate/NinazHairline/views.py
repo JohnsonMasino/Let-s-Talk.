@@ -196,4 +196,4 @@ def deleteMessage(request, pk):
     return render(request, 'NinazHairline/delete.html', {'obj': message})
 
 def updateUser(request):
-    return 
+    return render(request, context)
