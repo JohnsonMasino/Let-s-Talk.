@@ -25,7 +25,7 @@
         <div class="header__user">
           <a href="{% url 'update-user' %}">
             <div class="avatar avatar--medium active">
-              <img src="https://randomuser.me/api/portraits/men/37.jpg" />
+              <img src="{% static 'images/avatar.jpg' %}" />
             </div>
             <p>{{request.user.username}} <span>@{{request.user.username}}</span></p>
           </a>
@@ -72,8 +72,17 @@
         </div>
       </nav>
     </div>
-  </header>
+</header>
 
+{% block content %}
+<!--footer>
+  <div>
+    <p>
+      Contact us here
+    </p>
+  </div>
+</footer-->
+{% endblock content %}
 
 
 

@@ -213,4 +213,6 @@ def topicsPage(request):
     topics = Topic.objects.filter(name__icontains=q)
     return render(request, 'NinazHairline/topics.html', {'topics': topics})
 
-
+def activityPage(request):
+    service_messages = Message.objects.all()
+    return render(request, 'NinazHairline/activity.html', {'service_messages': service_messages})
