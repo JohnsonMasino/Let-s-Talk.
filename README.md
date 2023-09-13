@@ -1,5 +1,6 @@
 ### Python Project.
 
+## Details
 0. Web Application for shopping hairs, beauty equipments/services and booking real time make up services.
 1. Building with python django.
 2. Implements its own virtual environment.
@@ -9,6 +10,6 @@
 6. Implements account creation.
 7. Implements account/password recovery.
 
->>AUTHOR.
+## AUTHOR.
 0. Johnson Masino Obinna.
 1. johnsonmasino@gmail.com.
