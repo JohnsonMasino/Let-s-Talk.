@@ -1,4 +1,4 @@
-### Python Project.
+# Ninaz-Hairline (Python Project).
 
 ## Details
 0. Web Application for shopping hairs, beauty equipments/services and booking real time make up services.
